@@ -81,6 +81,10 @@ class FileSystemNextModule : Module() {
         file.text()
       }
 
+      Function("base64") { file: FileSystemFile ->
+        file.base64()
+      }
+
       Function("exists") { file: FileSystemFile ->
         file.exists()
       }

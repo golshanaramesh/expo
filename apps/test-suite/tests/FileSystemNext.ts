@@ -283,5 +283,13 @@ export async function test({ describe, expect, it, ...t }) {
         expect(output.uri).toBe(file.uri);
       });
     });
+
+    describe('Returns base64', () => {
+      it('gets base64 of a file', async () => {
+        const src = new File(testDirectory + 'file.txt');
+        src.write('Hello world');
+        expect(src.base64()).toBe('SGVsbG8gd29ybGQ=');
+      });
+    });
   });
 }
