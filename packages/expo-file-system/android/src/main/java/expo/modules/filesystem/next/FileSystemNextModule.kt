@@ -34,9 +34,9 @@ class FileSystemNextModule : Module() {
       val fileName = URLUtil.guessFileName(url.toString(), contentDisposition, contentType)
 
       val destination = if (to is FileSystemDirectory) {
-        File(to.path, fileName)
+        File(to.file, fileName)
       } else {
-        to.path
+        to.file
       }
 
       val body = response.body ?: throw UnableToDownloadException("response body is null")
@@ -49,8 +49,8 @@ class FileSystemNextModule : Module() {
     }
 
     Class(FileSystemFile::class) {
-      Constructor { path: URI ->
-        FileSystemFile(File(path.path))
+      Constructor { uri: URI ->
+        FileSystemFile(File(uri.path))
       }
 
       Function("delete") { file: FileSystemFile ->
@@ -93,14 +93,14 @@ class FileSystemNextModule : Module() {
         file.move(destination)
       }
 
-      Property("path") { file ->
+      Property("uri") { file ->
         file.asString()
       }
     }
 
     Class(FileSystemDirectory::class) {
-      Constructor { path: URI ->
-        FileSystemDirectory(File(path.path))
+      Constructor { uri: URI ->
+        FileSystemDirectory(File(uri.path))
       }
 
       Function("delete") { directory: FileSystemDirectory ->
@@ -127,7 +127,7 @@ class FileSystemNextModule : Module() {
         directory.move(destination)
       }
 
-      Property("path") { directory ->
+      Property("uri") { directory ->
         directory.asString()
       }
     }
